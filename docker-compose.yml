@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - organizer_db
+  web:
+    image: localhost/organizer
+    build: ./
+    environment:
+      - DEBUG=${DJANGO_DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 8000:8000
