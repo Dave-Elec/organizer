@@ -28,16 +28,26 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+MATERIAL_ADMIN_SITE = {
+    'HEADER':  'TODO',
+    'TITLE':  'TODO',
+    'MAIN_BG_COLOR':  'teal',
+    'MAIN_HOVER_COLOR':  'teal',
+    'SHOW_THEMES':  True,
+    'TRAY_REVERSE': False,
+    'NAVBAR_REVERSE': False,
+    'SHOW_COUNTS': False,
+}
 
+# Application definition
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'material',
+    'material.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'material',
     'todo'
 ]
 
