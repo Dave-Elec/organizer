@@ -1,28 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>TODO</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-        <h1>TODO</h1>
-        {% for message in messages %}
-        <h4>{{message}}</h4>
-        {% endfor %}
-        {% for task in tasks %}
-        <div>
-            <h3>{{ task.title }}</h3>
-            <h4>{{ task.details }}</h4>
-            <h5>{{ task.date_created }}</h5>
-            <a href="/remove/{{task.id}}">Remove</a>
+{% extends "base.html" %}
+{% load material_form %}
 
-        <div>
-        {% endfor %}
-        <form action="{% url 'tasks' %}" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input class="btn" type="submit" value="Save">
-        </form>
-    </body>
-</html>
+{% block body %}
+  <div class="row">
+    <div class="col-md-12">
+      <h2>TODO</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12">
+      {% for message in messages %}
+        {% if message.level_tag == "warning" %}
+          <div class="card-panel amber darken-3" style="padding: 10px">
+        {% else %}
+          <div class="card-panel teal" style="padding: 10px">
+        {% endif %}
+          <strong class="white-text">{{message}}</strong>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="row">
+    {% for task in tasks %}
+      <div class="col s12 m6 l4">
+        <div class="card blue-grey darken-2">
+          <div class="card-content white-text">
+            <span class="card-title">{{ task.title }}</span>
+            <p>{{ task.details }}</p>
+            <p>{{ task.date_created }}</p>
+          </div>
+          <div class="card-action">
+          <a href="{% url 'remove' task.id %}">Remove</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large modal-trigger" href="#form_modal">
+      <i class="material-icons">add</i>
+    </a>
+    </div>
+  <div id="form_modal" class="modal">
+    <form action="{% url 'tasks' %}" method="post">
+      {% csrf_token %}
+      <div class="modal-content">
+        {% form form=form %}{% endform %}
+      </div>
+      <div class="modal-footer">
+        <input class="waves-effect waves-green btn-flat" type="submit" value="Save">
+        <a href="#!" class="modal-close waves-effect waves-yellow btn-flat">Cancel</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

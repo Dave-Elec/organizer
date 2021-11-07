@@ -11,7 +11,7 @@ def index(request):
         task_form = TaskForm(data)
         if task_form.is_valid():
             task_form.save()
-            messages.info(request, 'Task Item created!')
+            messages.success(request, 'Task Item created!')
             redirect('tasks')
     task_form = TaskForm()
     context = {
@@ -19,13 +19,13 @@ def index(request):
         "tasks": tasks_list,
     }
     return render(request, 'todo/index.html', context)
-    
+
 
 def remove_task(request, task_id):
     task = Task.objects.filter(id=task_id)
     if task.exists():
         task.delete()
-    messages.info(request, 'Task Item removed!')
+    messages.warning(request, 'Task Item removed!')
     return redirect('tasks')
 
 
